@@ -8,6 +8,34 @@ export default function Contacts() {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
 
-    
+    useEffect(() => {
+        async function loadContacts() {
+            const {data, error} = await supabase
+                .from('contacts')
+                .select('*')
+                .order('created_at', { ascending: false })
 
+            if (error) {
+                setError(error.message)
+            } else {
+                setContacts(data)
+            }
+            setLoading(false)
+        }
+        loadContacts()
+    }, [])
+
+    async function addContact(e) {
+        e.preventDefault()
+        if (!name.trim()) return
+
+        const {data, error} = await supabase 
+            .from('contacts')
+            .insert({
+                name: name.trim(),
+                relationship: relationship.trim() || null,
+            })
+        .select()
+        .single()
+    }
 }
