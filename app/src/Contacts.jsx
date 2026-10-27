@@ -37,5 +37,17 @@ export default function Contacts() {
             })
         .select()
         .single()
-    }
+
+        if (error) {
+            setError(error.message)
+            return
+          }
+      
+          setContacts([...contacts, data].sort((a, b) => a.name.localeCompare(b.name)))
+          setName('')
+          setRelationship('')
+          setError('')
+        }
+
+
 }
