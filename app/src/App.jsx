@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from './supabase'
 import Auth from './Auth'
+import Contacts from './Contacts'
 
 export default function App() {
   const [session, setSession] = useState(null)
@@ -34,16 +35,22 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center gap-4">
-      <h1 className="text-3xl font-bold text-white">
-        Logged in as <span className="text-indigo-400">{session.user.email}</span>
-      </h1>
-      <button
-        onClick={() => supabase.auth.signOut()}
-        className="rounded-lg bg-slate-700 hover:bg-slate-600 text-white px-4 py-2"
-      >
-        Log out
-      </button>
+    <div className="min-h-screen bg-slate-900">
+      <header className="flex items-center justify-between px-6 py-4 border-b border-slate-800">
+        <h1 className="text-xl font-bold text-white">
+          Recall<span className="text-indigo-400">.</span>
+        </h1>
+        <div className="flex items-center gap-4">
+          <span className="text-sm text-slate-400">{session.user.email}</span>
+          <button
+            onClick={() => supabase.auth.signOut()}
+            className="rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-sm px-3 py-1"
+          >
+            Log out
+          </button>
+        </div>
+      </header>
+      <Contacts />
     </div>
   )
 }
